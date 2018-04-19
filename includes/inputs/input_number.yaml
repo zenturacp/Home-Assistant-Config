@@ -9,3 +9,15 @@
     min: 0
     max: 100
     step: 1
+
+  sonos_limit_nana_max:
+    name: Nana Max Level
+    min: 10
+    max: 100
+    step: 1
+
+  sonos_limit_stue_max:
+    name: Stue Max Level
+    min: 10
+    max: 100
+    step: 1

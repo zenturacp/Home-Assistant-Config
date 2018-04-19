@@ -17,17 +17,21 @@ sensor.weekofyear:
 sensor.date_long:
   icon: mdi:calendar-blank
 group.group_favorites:
-  order: 1
+  order: "1"
 group.group_datetimeweather:
-  order: 2
+  order: "2"
 group.tab_stue:
-  order: 1
-group.tab_system:
-  order: 2
+  order: "1"
+group.tab_music:
+  order: "2"
+group.tab_media:
+  order: "3"
 group.tab_power:
-  order: 3
+  order: "4"
 group.tab_test:
-  order: 4
+  order: "5"
+group.tab_system:
+  order: "6"
 zwave.stue_akvarie:
   friendly_name: Stue Lys Akvarie
 zwave.stue_light_loft:
@@ -55,3 +59,19 @@ zwave.gang_sensor_door:
   friendly_name: Gang Sensor Dør
 zwave.sovevaerlse_lys_loft:
   friendly_name: Soveværelse Lys Loft
+group.media_sonos_1:
+  order: "1"
+group.media_sonos_2:
+  order: "2"
+group.media_sonos_limit_volume:
+  order: "3"
+group.media_tv:
+  order: "4"
+input_boolean.sonos_limit_nana_active:
+  icon: mdi:volume-medium
+input_boolean.sonos_limit_stue_active:
+  icon: mdi:volume-medium
+input_number.sonos_limit_stue_max:
+  icon: mdi:tune
+input_number.sonos_limit_nana_max:
+  icon: mdi:tune

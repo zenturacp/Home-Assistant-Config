@@ -1,6 +1,7 @@
 tab_test:
   name: Test
   view: yes
+  icon: mdi:test-tube
   entities:
     - group.test_dev
     - group.test_automation
