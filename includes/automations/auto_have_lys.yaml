@@ -1,0 +1,19 @@
+# Tænd havelys når solen går ned
+
+  - alias: have_taend_lys
+    trigger:
+      - platform: sun
+        event: sunset
+    action:
+      - service: switch.turn_on
+        entity_id: switch.have_lys
+
+# Sluk lys i haven kl 00:30
+
+  - alias: have_sluk_lys
+    trigger:
+      - platform: time
+        at: "00:30:00"
+    action:
+      - service: switch.turn_off
+        entity_id: switch.have_lys

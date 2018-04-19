@@ -37,6 +37,8 @@ test_automation:
     - automation.akvarie_turn_on
     - automation.gang_motion_detected
     - automation.gang_motion_detected_off
+    - automation.have_taend_lys
+    - automation.have_sluk_lys
 
 test_gang_dimmer2:
   name: Gang Dimmer2
