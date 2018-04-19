@@ -1,0 +1,69 @@
+default_view:
+  name: Hjem
+  view: yes
+  icon: mdi:home
+  entities:
+    - sensor.yr_symbol
+    - sun.sun
+    - group.default_presence
+    - group.default_favorites
+    - group.default_datetimeweather
+    - group.default_light_akvarie
+    - group.default_lys_andre
+    - group.devices_christian
+    - group.devices_helle
+    - group.devices_tate
+
+default_favorites:
+  name: Stue
+  entities:
+    - light.stue_lys_tv
+    - light.stue_lys_loft
+    - switch.stue_lys_lyskaede
+    - light.stue_lys_bord
+
+default_lys_andre:
+  name: Andet lys
+  entities:
+    - light.sovevaerelse_lys_loft
+    - switch.have_lys
+
+default_presence:
+  name: Tilstedeværelse
+  entities:
+    - sensor.track_christian
+    - sensor.track_helle
+    - sensor.track_tate
+    - sensor.track_jagtvej14
+
+default_datetimeweather:
+  name: Dato, Tid og Vejr
+  entities:
+    - sensor.date_long
+    - sensor.nextsunrise
+    - sensor.nextsunset
+    - sensor.weekofyear
+
+default_light_akvarie:
+  name: Akvarie
+  control: hidden
+  entities:
+    - zwave.stue_akvarie
+    - light.stue_akvarie_main
+    - light.stue_akvarie_front
+    - light.stue_akvarie_middle
+    - light.stue_akvarie_back
+    - light.akvarie_lys
+    - sensor.stue_akvarie_power
+    - script.akvarie_turn_on
+    - script.akvarie_turn_off
+    - script.akvarie_sunset_loop
+    - input_number.akvarie_sunset_level
+    - input_select.akvarie_sunset_automation
+    - input_select.akvarie_sunset_direction
+    - input_number.akvarie_sunset_level_last
+
+#    - light.stue_akvarie_rgb
+#    - light.stue_akvarie_white
+#    - sensor.stue_akviare_exporting
+#    - sensor.stue_akvarie_power2

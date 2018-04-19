@@ -1,0 +1,13 @@
+# Input Select Here
+  akvarie_sunset_automation:
+    name: Solopgang Mode
+    initial: stop
+    options:
+      - down
+      - up
+      - stop
+
+  akvarie_sunset_direction:
+    options:
+      - up
+      - down

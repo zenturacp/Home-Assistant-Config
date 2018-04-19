@@ -1,0 +1,54 @@
+akvarie_turn_on:
+  alias: Tænd akvarie
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.stue_akvarie_front
+        brightness_pct: "100"
+    - service: light.turn_on
+      data:
+        entity_id: light.stue_akvarie_middle
+        brightness_pct: "100"
+    - service: light.turn_on
+      data:
+        entity_id: light.stue_akvarie_back
+        brightness_pct: "100"
+
+akvarie_turn_off:
+  alias: Sluk Akvarie
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: light.stue_akvarie_front
+    - service: light.turn_off
+      data:
+        entity_id: light.stue_akvarie_middle
+    - service: light.turn_off
+      data:
+        entity_id: light.stue_akvarie_back
+
+stue_lys_turn_on:
+  alias: Stue tænd lys
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.stue_lys_loft
+    - service: switch.turn_on
+      data:
+        entity_id: switch.stue_lys_lyskaede
+    - service: light.turn_on
+      data:
+        entity_id: light.s_lys_tv
+
+stue_lys_turn_off:
+  alias: Stue sluk lys
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: light.stue_lys_loft
+    - service: switch.turn_off
+      data:
+        entity_id: switch.stue_lys_lyskaede
+    - service: light.turn_off
+      data:
+        entity_id: light.s_lys_tv

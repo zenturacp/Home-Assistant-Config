@@ -1,0 +1,33 @@
+# Stue tænd alt lys 1 time før solnedgang
+
+  - alias: stue_taend_lys
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "-02:00:00"
+    action:
+      - service: homeassistant.turn_on
+        entity_id: group.default_favorites
+
+# Stue sluk alt lys kl 01:00
+
+  - alias: stue_sluk_lys
+    trigger:
+      - platform: time
+        at: "01:00:00"
+    action:
+      - service: homeassistant.turn_off
+        entity_id: group.default_favorites
+
+# Stue - Toggle ved dobbelt klik
+
+  - alias: stue_toggle_dobbeltklik
+    trigger:
+      - platform: event
+        event_type: zwave.scene_activated
+        event_data:
+          entity_id: zwave.stue_lys_loft
+          scene_id: 14
+    action:
+      - service: script.turn_on
+        entity_id: script.test_light_toggle

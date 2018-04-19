@@ -1,0 +1,123 @@
+  - platform: yr
+  - platform: statistics
+    name: stue_multi_statistics_humidity
+    entity_id: sensor.stue_multi_relative_humidity
+    sampling_size: 720
+    max_age:
+      hours: 12
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: memory_use_percent
+      - type: processor_use
+      - type: load_15m
+      - type: since_last_boot
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone3/temp"
+    # If errors occur, remove degree symbol below
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(0) }}'
+  - platform: template
+    sensors:
+      date_short:
+        friendly_name: 'Kort Dato'
+        value_template: >
+          {{ now().strftime('%d/%m/%Y') }}
+      date_long:
+        friendly_name: 'Dato'
+        value_template: >
+          {% set months = ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"] %}
+          {% set month = months[now().strftime('%m') | int -1] %}
+          {{ now().strftime('%d') + ' ' + month + ' '+ now().strftime('%Y') }}
+      nextsunrise:
+        friendly_name: 'Næste Solopgang'
+        value_template: "{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom('%H:%M %d/%m/%Y') }}"
+      nextsunrisetime:
+        friendly_name: 'Solopgang Klokkeslæt'
+        value_template: "{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom('%H:%M') }}"
+      nextsunset:
+        friendly_name: 'Næste Solnedgang'
+        value_template: "{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom('%H:%M %d/%m/%Y') }}"
+      nextsunsettime:
+        friendly_name: 'Solnedgang Klokkeslet'
+        value_template: "{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom('%H:%M') }}"
+      weekofyear:
+        friendly_name: 'Ugenummer'
+        value_template: "{{ now().strftime('%W') }}"
+      gang_sensor_battery:
+        friendly_name: 'Gang Batteri niveau'
+        value_template: >-
+          {% if states.zwave.gang_multi.state %}
+            {{ states.zwave.gang_multi.attributes.battery_level | int }}
+          {% else %}
+            n/a
+          {% endif %}
+        icon_template: >-
+          {% set battery_level = states('sensor.gang_sensor_battery')|int('unknown') %}
+          {% set battery_round = (battery_level|int / 10)|int * 10 %}
+          {% if battery_level == 'unknown' %}
+            mdi:battery-unknown
+          {% else %}
+            {% if battery_round >= 100 %}
+              mdi:battery
+            {% elif battery_round > 0 %}
+              mdi:battery-{{ battery_round }}
+            {% else %}
+              mdi:battery-alert
+            {% endif %}
+          {% endif %}
+        unit_of_measurement: "%"
+      power_usage_total:
+        friendly_name: Samlet strømforbrug
+        unit_of_measurement: "kWh"
+        value_template: >-
+          {{ (float(states.sensor.stue_lys_loft_energy.state) + float(states.sensor.stue_lys_lyskaede_unknown.state) + float(states.sensor.stue_akvarie_energy.state) + float(states.sensor.gang_lys_energy.state) + float(states("sensor.have_lys_kwh")) ) | round(1) }}
+      power_usage_current:
+        friendly_name: Samlet aktuelt strømforbrug
+        unit_of_measurement: "W"
+        value_template: >-
+          {{ (float(states.sensor.stue_lys_loft_power_2.state) + float(states.sensor.stue_lys_lyskaede_power.state) + float(states.sensor.stue_akvarie_power.state) + float(states.sensor.gang_lys_power_2.state) + float(states("sensor.have_lys_watt")) ) | round(1) }}
+      track_christian:
+        friendly_name: Christian
+        value_template: >-
+          {% if is_state('device_tracker.christian_iphone','Zentura') %}
+            Arbejde
+          {% elif is_state('group.devices_christian','not_home') %}
+            Ude
+          {% elif is_state('group.devices_christian','home') %}
+            Hjemme
+          {% endif %}
+        entity_picture_template: '/local/christian.png'
+      track_helle:
+        friendly_name: Helle
+        value_template: >-
+          {% if is_state('device_tracker.helle_iphone','Teater') %}
+            Arbejde
+          {% elif is_state('group.devices_helle','not_home') %}
+            Ude
+          {% elif is_state('group.devices_helle','home') %}
+            Hjemme
+          {% endif %}
+        entity_picture_template: '/local/helle.png'
+      track_tate:
+        friendly_name: Tate
+        value_template: >-
+          {% if is_state('group.devices_tate','not_home') %}
+            Ude
+          {% elif is_state('group.devices_tate','home') %}
+            Hjemme
+          {% endif %}
+        entity_picture_template: '/local/tate.png'
+      track_jagtvej14:
+        friendly_name: Jagtvej 14
+        value_template: >-
+          {% if is_state('group.devices_tate','not_home') and is_state('group.devices_helle','not_home') and is_state('group.devices_christian','not_home') %}
+            Ingen hjemme
+          {% elif is_state('group.devices_tate','home') or is_state('group.devices_helle','home') or is_state('group.devices_christian','home') %}
+            Nogen hjemme
+          {% endif %}
+        entity_picture_template: '/local/jagtvej14.png'

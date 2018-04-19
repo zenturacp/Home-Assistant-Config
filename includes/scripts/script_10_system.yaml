@@ -1,0 +1,57 @@
+# Reload Scripts
+
+trigger_reload_automation:
+  alias: Reload Automation
+  sequence:
+    - service: automation.reload
+    - service: logbook.log
+      data:
+        name: Automations
+        message: Reload triggered
+        entity_id: script.trigger_reload_automation
+        domain: script
+
+trigger_reload_group:
+  alias: Reload Groups
+  sequence:
+    - service: group.reload
+    - service: logbook.log
+      data:
+        name: Groups
+        message: Reload triggered
+        entity_id: script.trigger_reload_group
+        domain: script
+
+trigger_reload_script:
+  alias: Reload Scripts
+  sequence:
+    - service: script.reload
+    - service: logbook.log
+      data:
+        name: Scripts
+        message: Reload triggered
+        entity_id: script.trigger_reload_script
+        domain: script
+
+trigger_reload_core:
+  alias: Reload Core
+  sequence:
+    - service: homeassistant.reload_core_config
+    - service: logbook.log
+      data:
+        name: Core
+        message: Reload triggered
+        entity_id: script.trigger_reload_core
+        domain: script
+
+trigger_reload_all:
+  alias: Reload All
+  sequence:
+    - service: script.turn_on
+      entity_id: script.trigger_reload_automation
+    - service: script.turn_on
+      entity_id: script.trigger_reload_group
+    - service: script.turn_on
+      entity_id: script.trigger_reload_core
+    - service: script.turn_on
+      entity_id: script.trigger_reload_script

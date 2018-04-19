@@ -1,0 +1,62 @@
+# Gang - Lys tænd
+
+  - alias: gang_motion_detected
+    trigger:
+      platform: state
+      entity_id: binary_sensor.gang_sensor
+      to: 'on'
+    condition:
+      - condition: state
+        entity_id: timer.gang_lys_motion_disabled
+        state: 'idle'
+      - condition: sun
+        after: sunset
+        after_offset: '-02:00:00'
+      - condition: time
+        before: '23:30:00'
+    action:
+      - service: light.turn_on
+        entity_id: light.gang_lys
+      - service: timer.cancel
+        entity_id: timer.gang_lys_motion
+      - service: timer.start
+        entity_id: timer.gang_lys_motion
+        data:
+          duration: '00:02:00'
+
+# Motion Detection Off
+
+  - alias: gang_motion_detected_off
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.gang_lys_motion
+    condition:
+      condition: state
+      entity_id: light.gang_lys
+      state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.gang_lys
+
+# Override Motion Detection for 5 min
+
+  - alias: gang_lys_manuel
+    trigger:
+      - platform: event
+        event_type: zwave.scene_activated
+        event_data:
+          entity_id: zwave.gang_lys
+          scene_id: 16
+    action:
+      - service: timer.cancel
+        entity_id: timer.gang_lys_motion_disabled
+      - service: timer.start
+        entity_id: timer.gang_lys_motion_disabled
+      - service: timer.cancel
+        entity_id: timer.gang_lys_motion
+      - service: timer.start
+        entity_id: timer.gang_lys_motion
+        data:
+          duration: '00:30:00'

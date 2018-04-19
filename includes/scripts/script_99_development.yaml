@@ -1,0 +1,72 @@
+test_dev:
+  alias: Test Script
+  sequence:
+    - service: mqtt.publish
+      data:
+        topic: "home/stue/light_table"
+        payload: "on"
+
+test_light_toggle:
+  alias: Tænd / Sluk alt
+  sequence:
+    - service_template: >
+        {% if is_state("light.stue_lys_loft","on") or is_state("switch.stue_lys_lyskaede","on") or is_state("light.stue_lys_tv","on") or is_state("light.stue_lys_bord","on") %}
+          homeassistant.turn_off
+        {% else %}
+          homeassistant.turn_on
+        {% endif %}
+# End Template
+      data:
+        entity_id: group.default_favorites
+
+test_skriv_i_logbook:
+    alias: Skriv i Logbook
+    sequence:
+      - service: logbook.log
+        data_template:
+          name: Test
+          message: Er en besked
+          # Optional
+          # entity_id: light.kitchen
+          #domain: light
+
+test_enable_debug_info:
+    alias: Vis Debug info
+    sequence:
+      - service: group.set_visibility
+        entity_id: group.devices_helle
+        data:
+          visible: True
+      - service: group.set_visibility
+        entity_id: group.devices_christian
+        data:
+          visible: True
+      - service: group.set_visibility
+        entity_id: group.devices_tate
+        data:
+          visible: True
+      - service: group.set_visibility
+        entity_id: group.default_light_akvarie
+        data:
+          visible: True
+
+
+test_disable_debug_info:
+    alias: Skjul Debug info
+    sequence:
+      - service: group.set_visibility
+        entity_id: group.devices_helle
+        data:
+          visible: False
+      - service: group.set_visibility
+        entity_id: group.devices_christian
+        data:
+          visible: False
+      - service: group.set_visibility
+        entity_id: group.devices_tate
+        data:
+          visible: False
+      - service: group.set_visibility
+        entity_id: group.default_light_akvarie
+        data:
+          visible: False

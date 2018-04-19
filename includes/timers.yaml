@@ -1,0 +1,9 @@
+# Timers
+
+  gang_lys_motion:
+    name: Gang Motion Timer
+    duration: "00:02:00"
+
+  gang_lys_motion_disabled:
+    name: Gang Motion Timer Disabled
+    duration: "00:05:00"

@@ -1,0 +1,18 @@
+# Akvarie Actions
+
+akvarie_sunset_loop:
+  alias: Akvari Loop
+  sequence:
+    - condition: template
+      value_template: '{{ states.input_select.akvarie_sunset_automation.state != stop }}'
+    - condition: template
+      value_template: '{{ (states.input_number.akvarie_sunset_level.state | int) >= 0 or (states.input_number.akvarie_sunset_level.state | int) <= 100 }}'
+    - delay:
+        seconds: 20
+    - service_template: >
+        {%- if is_state("input_select.akvarie_sunset_automation","up") -%}
+          input_number.increment
+        {%- elif is_state("input_select.akvarie_sunset_automation","down") -%}
+          input_number.decrement
+        {%- endif -%}
+      entity_id: input_number.akvarie_sunset_level

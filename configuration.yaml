@@ -1,0 +1,188 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Jagtvej14
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret zone_home_lat
+  longitude: !secret zone_home_long
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 5
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Copenhagen
+  # Customization file
+  customize: !include customize.yaml
+  customize_glob: !include includes/custom-ui.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: !secret base_url
+  ssl_certificate: !secret ssl_certificate
+  ssl_key: !secret ssl_key
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Text to speech
+tts:
+  - platform: google
+    language: 'da'
+
+# Includes
+group: !include_dir_merge_named includes/groups
+automation: !include automations.yaml
+automation old: !include_dir_merge_list includes/automations
+script: !include_dir_merge_named includes/scripts
+sensor: !include includes/sensors.yaml
+light: !include includes/lights.yaml
+timer: !include includes/timers.yaml
+
+# Inputs - Enable when you include some
+#input_boolean: !include includes/inputs/input_boolean.yaml
+#input_text: !include includes/inputs/input_text.yaml
+input_number: !include includes/inputs/input_number.yaml
+#input_datetime: !include includes/inputs/input_datetime.yaml
+input_select: !include includes/inputs/input_select.yaml
+
+device_tracker:
+  - platform: unifi
+    host: !secret unifi_ip
+    username: !secret unifi_username
+    password: !secret unifi_password
+    verify_ssl: false
+    ssid_filter:
+      - 'Jagtvej14'
+      - 'Jagtvej14_N'
+      - 'Zentura'
+    new_device_defaults:
+      track_new_devices: false
+      hide_if_away: false
+  - platform: bluetooth_tracker
+    interval_seconds: 12
+    consider_home: 180
+    new_device_defaults:
+      track_new_devices: false
+      hide_if_away: false
+
+notify:
+
+ffmpeg:
+
+recorder:
+  purge_interval: 2
+  purge_keep_days: 14
+
+panel_iframe:
+  configurator:
+    title: Editor
+    icon: mdi:wrench
+    url: !secret configurator_url
+  terminal:
+    title: Terminal
+    icon: mdi:console
+    url: !secret terminal_url
+
+mqtt:
+  broker: !secret mqtt_hostname
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+ios:
+
+hassio:
+
+media_player:
+  - platform: sonos
+  - platform: samsungtv
+    name: TV Stue
+    host: !secret samsung_tv_ip
+    port: 8001
+
+apple_tv:
+  - host: !secret apple_tv_ip
+    login_id: !secret apple_tv_login_id
+    name: Apple TV
+    start_off: true
+    credentials: !secret apple_tv_credentials
+
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+
+hue:
+  bridges:
+    - host: !secret hue_ip
+      allow_unreachable: false
+      allow_hue_groups: false
+
+
+customizer:
+  custom_ui: hosted
+  hide_attributes:
+    - node_id
+    - value_index
+    - value_instance
+    - value_id
+
+
+zone:
+  - name: Home
+    latitude: !secret zone_home_lat
+    longitude: !secret zone_home_long
+    radius: 150
+    icon: mdi:home
+
+  - name: Zentura
+    latitude: !secret zone_zentura_lat
+    longitude: !secret zone_zentura_long
+    radius: 150
+    icon: mdi:domain
+
+  - name: Teater
+    latitude: !secret zone_teater_lat
+    longitude: !secret zone_teater_long
+    radius: 150
+    icon: mdi:theater
+
+#logger:
+
+# ============= Disabled =============
+
+# Cloud
+#cloud:
+
+# Discover some devices automatically
+#discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+#conversation:
+
+# Show links to resources in log and frontend
+#introduction:

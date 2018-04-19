@@ -1,0 +1,9 @@
+# Homeassistnat Startup
+
+  - alias: home_assistant_startup
+    trigger:
+      platform: homeassistant
+      event: start
+    action:
+      service: script.turn_on
+      entity_id: script.test_disable_debug_info

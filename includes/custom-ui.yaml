@@ -1,0 +1,38 @@
+"*.*":
+  custom_ui_state_card: state-card-custom-ui
+
+# Custom UI Entries
+
+binary_sensor.gang_sensor:
+  group:
+    group.test_gang_sensor:
+      friendly_name: Bevægelse
+
+sensor.gang_multi_temperature:
+  group:
+    group.test_gang_sensor:
+      friendly_name: Temperatur
+
+sensor.gang_multi_relative_humidity:
+  group:
+    group.test_gang_sensor:
+      friendly_name: Luftfugtighed
+
+sensor.gang_sensor_battery:
+  group:
+    group.test_gang_sensor:
+      friendly_name: Batteri
+
+group.test_gang_sensor_badges:
+  state_card_mode: badges
+  badges_list:
+    - sensor.gang_sensor_battery
+    - sensor.gang_multi_relative_humidity
+    - sensor.gang_multi_temperature
+
+light.akvarie_lys:
+  state_card_mode: single-line
+  slider_theme:
+    min: 0
+    max: 100
+    pin: true

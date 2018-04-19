@@ -1,0 +1,30 @@
+# Tests
+
+  - alias: notify_ios_test
+    initial_state: off
+    trigger:
+      platform: time
+      at: '21:00:00'
+    action:
+      service: notify.ios_cp_iphone
+      data:
+        title: "Klokken er mange"
+        message: "Og du er taget til fange! - 2100 og du er anholdt!"
+        data:
+          push:
+            badge: 5
+
+  - alias: motion_detected_stue
+    initial_state: off
+    trigger:
+      platform: state
+      entity_id: binary_sensor.stue_multi_sensor
+      to: 'on'
+    action:
+      service: notify.ios_cp_iphone
+      data:
+        title: "Motion Detected"
+        message: "Stue"
+        data:
+          push:
+            badge: 5

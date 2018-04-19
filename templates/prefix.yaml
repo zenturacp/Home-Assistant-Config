@@ -1,0 +1,18 @@
+DeviceTracker
+
+IOS
+<username>_iphone:
+BlueTooth
+<username>_bt:
+Wifi
+<username>_wifi:
+
+Lys
+
+<room>_lys_<placering>:
+
+Sensor
+
+<room>_sensor_<placering>:
+
+Binary Sensor

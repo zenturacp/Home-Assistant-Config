@@ -1,0 +1,84 @@
+tab_test:
+  name: Test
+  view: yes
+  entities:
+    - group.test_dev
+    - group.test_automation
+    - group.test_gang_sensor
+    - group.test_gang_dimmer2
+    - group.test_timers
+    - group.test_presence
+
+test_dev:
+  name: Test / Udvikling
+  control: hidden
+  entities:
+    - script.test_dev
+    - script.test_light_toggle
+    - script.test_skriv_i_logbook
+    - script.test_enable_debug_info
+    - script.test_disable_debug_info
+
+test_presence:
+  name: Placering
+  entities:
+    - device_tracker.cp_iphone
+
+test_automation:
+  name: Automation
+  control: hidden
+  entities:
+    - automation.notify_ios_test
+    - automation.motion_detected_stue
+    - automation.stue_toggle_dobbeltklik
+    - automation.stue_sluk_lys
+    - automation.stue_taend_lys
+    - automation.akvarie_turn_off
+    - automation.akvarie_turn_on
+    - automation.gang_motion_detected
+    - automation.gang_motion_detected_off
+
+test_gang_dimmer2:
+  name: Gang Dimmer2
+  control: hidden
+  entities:
+    - light.gang_lys
+    - sensor.gang_lys_energy
+    - sensor.gang_lys_power_2
+#    - light.gang_lys_level
+#    - sensor.gang_lys_alarm_type
+#    - sensor.gang_lys_alarm_level
+#    - sensor.gang_lys_power
+#    - sensor.gang_lys_exporting
+#    - sensor.gang_lys_sourcenodeid
+#    - sensor.gang_lys_heat
+#    - sensor.gang_lys_power_management
+#    - sensor.gang_lys_system
+
+test_gang_sensor:
+  name: Gang Sensor
+  control: hidden
+  entities:
+    - binary_sensor.gang_sensor
+    - group.test_gang_sensor_badges
+
+
+test_gang_sensor_badges:
+  entities:
+    - sensor.gang_multi_temperature
+    - sensor.gang_multi_relative_humidity
+    - sensor.gang_sensor_battery
+#    - sensor.gang_multi_luminance
+#    - sensor.gang_multi_alarm_type
+#    - sensor.gang_multi_alarm_level
+#    - sensor.gang_multi_ultraviolet
+#    - sensor.gang_multi_sourcenodeid
+#    - sensor.gang_multi_burglar
+
+
+test_timers:
+  name: Timers
+  control: hidden
+  entities:
+    - timer.gang_lys_motion
+    - timer.gang_lys_motion_disabled

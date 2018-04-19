@@ -1,0 +1,45 @@
+tab_system:
+  name: System
+  view: yes
+  icon: mdi:settings
+  entities:
+    - group.system_hwmonitor
+    - group.system_zwave_devices
+    - group.system_reload
+    - group.devices_christian_iphone
+    - group.devices_helle_iphone
+
+system_reload:
+  name: Reload Modules
+  control: hidden
+  entities:
+    - script.trigger_reload_automation
+    - script.trigger_reload_group
+    - script.trigger_reload_script
+    - script.trigger_reload_core
+    - script.trigger_reload_all
+
+system_zwave_devices:
+  name: Z-Wave Enheder
+  entities:
+    - zwave.zwave_controller
+    - zwave.stue_wallplug
+    - zwave.stue_multi
+    - zwave.stue_akvarie
+    - zwave.stue_lys_loft
+    - zwave.stue_lys_lyskaede
+    - zwave.gang_multi
+    - zwave.gang_lys
+    - zwave.gang_sensor_door
+    - zwave.sovevaerlse_lys_loft
+
+system_hwmonitor:
+  name: System Info
+  entities:
+    - sensor.cpu_temperature
+    - sensor.disk_free_
+    - sensor.disk_use_percent_
+    - sensor.load_15m
+    - sensor.memory_use_percent
+    - sensor.processor_use
+    - sensor.since_last_boot

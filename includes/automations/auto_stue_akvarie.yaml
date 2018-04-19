@@ -1,0 +1,141 @@
+# Akvarie tænd lys 1 time før solnedgang
+
+  - alias: akvarie_turn_on
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: "-01:00:00"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.akvarie_sunset_automation
+          option: up
+
+# Akvarie sluk kl 01:00
+
+  - alias: akvarie_turn_off
+    trigger:
+      - platform: time
+        at: "01:30:00"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.akvarie_sunset_automation
+          option: down
+
+  - alias: akvarie_sunset_front
+    trigger:
+      - platform: state
+        entity_id: input_number.akvarie_sunset_level
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.stue_akvarie_front
+          brightness_pct: >-
+            {% set slider = trigger.to_state.state | int %}
+            {% set increment = 100/80 %}
+            {% if slider <= 0 %}
+              0
+            {% elif slider > 0 and slider < 80 %}
+              {{ (slider * increment) | round() }}
+            {% elif slider >= 80 %}
+              100
+            {% endif %}
+
+  - alias: akvarie_sunset_middle
+    trigger:
+      - platform: state
+        entity_id: input_number.akvarie_sunset_level
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.stue_akvarie_middle
+          brightness_pct: >-
+            {% set slider = trigger.to_state.state | int %}
+            {% set increment = 100/80 %}
+            {% if slider <= 10 %}
+              0
+            {% elif slider > 10 and slider < 90 %}
+              {{ ((slider - 10) * increment) | round() }}
+            {% elif slider >= 90 %}
+              100
+            {% endif %}
+
+  - alias: akvarie_sunset_back
+    trigger:
+      - platform: state
+        entity_id: input_number.akvarie_sunset_level
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: light.stue_akvarie_back
+          brightness_pct: >-
+            {% set slider = trigger.to_state.state | int %}
+            {% set increment = 100/80 %}
+            {% if slider <= 20 %}
+              0
+            {% elif slider > 20 and slider < 100 %}
+              {{ ((slider - 20) * increment) | round() }}
+            {% elif slider >= 100 %}
+              100
+            {% endif %}
+
+  - alias: akvarie_sunset_loop
+    trigger:
+      - platform: state
+        entity_id: script.akvarie_sunset_loop
+        from: 'on'
+    condition:
+      - condition: template
+        value_template: '{{ states("input_select.akvarie_sunset_automation") != "stop" }}'
+      - condition: template
+        value_template: '{{ states("input_number.akvarie_sunset_level") | int > 0 and states("input_number.akvarie_sunset_level") | int < 100 }}'
+    action:
+      - service: script.turn_on
+        entity_id: script.akvarie_sunset_loop
+
+  - alias: akvarie_sunset_reset_automation
+    trigger:
+      - platform: template
+        value_template: '{{ states("input_number.akvarie_sunset_level") | int == 0 or states("input_number.akvarie_sunset_level") | int == 100}}'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.akvarie_sunset_automation
+          option: stop
+
+  - alias: akvarie_start_sun
+    trigger:
+      - platform: state
+        entity_id: input_select.akvarie_sunset_automation
+        from: 'stop'
+    action:
+      - service_template: >
+          {%- if trigger.to_state.state == 'up' -%}
+            input_number.increment
+          {%- elif trigger.to_state.state == 'down' -%}
+            input_number.decrement
+          {%- endif -%}
+        data:
+          entity_id: input_number.akvarie_sunset_level
+      - service: script.turn_on
+        entity_id: script.akvarie_sunset_loop
+
+  - alias: akvarie_update_direction
+    trigger:
+      - platform: state
+        entity_id: input_number.akvarie_sunset_level
+    action:
+      - service: input_select.select_option
+        data_template:
+          entity_id: input_select.akvarie_sunset_direction
+          option: >
+            {%- if trigger.to_state.state > states("input_number.akvarie_sunset_level_last") -%}
+              up
+            {%- elif trigger.to_state.state < states("input_number.akvarie_sunset_level_last") -%}
+              down
+            {%- endif -%}
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.akvarie_sunset_level_last
+          value: '{{ trigger.to_state.state }}'

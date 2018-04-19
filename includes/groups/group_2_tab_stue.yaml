@@ -1,0 +1,58 @@
+tab_stue:
+  name: Stue
+  view: yes
+  icon: mdi:sofa
+  entities:
+    - group.group_stue_sensor
+    - group.group_stue_lys_loft
+    - group.group_stue_lys_lyskaede
+    - group.group_stue_lys_akvarie
+
+group_stue_sensor:
+  name: Sensor stue
+  entities:
+    - binary_sensor.stue_multi_sensor
+    - sensor.stue_multi_temperature
+    - sensor.stue_multi_luminance
+    - sensor.stue_multi_relative_humidity
+#    - sensor.stue_multi_ultraviolet
+#    - sensor.stue_multi_alarm_type
+#    - sensor.stue_multi_alarm_level
+#    - sensor.stue_multi_sourcenodeid
+#    - sensor.stue_multi_burglar
+    - sensor.stue_multi_statistics_humidity_mean
+
+group_stue_lys_loft:
+  name: Stue Lys Loft
+  entities:
+    - light.stue_lys_loft
+    - sensor.stue_lys_loft_energy
+    - sensor.stue_lys_loft_power
+    # - light.stue_lys_loft_level_2
+    # - sensor.stue_lys_loft_alarm_type
+    # - sensor.stue_lys_loft_alarm_level
+    # - sensor.stue_lys_loft_exporting
+    # - sensor.stue_lys_loft_sourcenodeid
+    # - sensor.stue_lys_loft_heat
+    # - sensor.stue_lys_loft_power_management
+    # - sensor.stue_lys_loft_system
+    # - sensor.stue_lys_loft_power_2
+
+group_stue_lys_lyskaede:
+  name: Stue Lyskæde
+  entities:
+    - switch.stue_lys_lyskaede
+    - sensor.stue_lys_lyskaede_unknown
+    - sensor.stue_lys_lyskaede_alarm_type
+    - sensor.stue_lys_lyskaede_alarm_level
+    - sensor.stue_lys_lyskaede_power
+    - sensor.stue_lys_lyskaede_power_2
+    - sensor.stue_lys_lyskaede_exporting
+    - sensor.stue_lys_lyskaede_sourcenodeid
+    - sensor.stue_lys_lyskaede_management
+
+group_stue_lys_akvarie:
+  name: Akvarie
+  control: hidden
+  entities:
+    - light.akvarie_lys

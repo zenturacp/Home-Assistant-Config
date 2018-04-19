@@ -1,0 +1,11 @@
+  akvarie_sunset_level:
+    icon: mdi:weather-sunset
+    name: Akvarie Solopgang
+    min: 0
+    max: 100
+    step: 1
+
+  akvarie_sunset_level_last:
+    min: 0
+    max: 100
+    step: 1

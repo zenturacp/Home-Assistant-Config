@@ -1,0 +1,32 @@
+devices_christian:
+  name: Christian
+  entities:
+    - device_tracker.christian_iphone
+    - device_tracker.christian_wifi
+    - device_tracker.christian_bt
+    
+devices_helle:
+  name: Helle
+  entities:
+    - device_tracker.helle_iphone
+    - device_tracker.helle_wifi
+    - device_tracker.helle_bt
+
+devices_tate:
+  name: Tate
+  entities:
+    - device_tracker.tate_wifi
+
+devices_christian_iphone:
+  name: Christian iPhone
+  entities:
+    - device_tracker.christian_iphone
+    - sensor.cp_iphone_x_battery_level
+    - sensor.cp_iphone_x_battery_state
+
+devices_helle_iphone:
+  name: Helle iPhone
+  entities:
+    - device_tracker.helle_iphone
+    - sensor.helle_belle_battery_level
+    - sensor.helle_belle_battery_state

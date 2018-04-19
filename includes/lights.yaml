@@ -1,0 +1,49 @@
+# Virtual Lights
+  - platform: template
+    lights:
+      stue_lys_bord:
+        friendly_name: Stue Lys Bord
+        turn_on:
+          - service: mqtt.publish
+            data:
+              topic: "home/stue/light_table"
+              payload: "on"
+        turn_off:
+          - service: mqtt.publish
+            data:
+              topic: "home/stue/light_table"
+              payload: "off"
+
+  - platform: template
+    lights:
+      akvarie_lys:
+        friendly_name: Akvarie Lys
+        level_template: '{{ states("input_number.akvarie_sunset_level") | int }}'
+        value_template: '{{ states("input_number.akvarie_sunset_level") | int > 0 }}'
+        turn_on:
+          - service: input_number.set_value
+            data:
+              entity_id: input_number.akvarie_sunset_level
+              value: 100
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.akvarie_sunset_automation
+              option: stop
+        turn_off:
+          - service: input_number.set_value
+            data:
+              entity_id: input_number.akvarie_sunset_level
+              value: 0
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.akvarie_sunset_automation
+              option: stop
+        set_level:
+          - service: input_number.set_value
+            data_template:
+              entity_id: input_number.akvarie_sunset_level
+              value: "{{ brightness | int }}"
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.akvarie_sunset_automation
+              option: stop

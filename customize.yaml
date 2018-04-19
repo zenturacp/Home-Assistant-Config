@@ -1,0 +1,57 @@
+zwave.stue_multi:
+  friendly_name: Stue Sensor
+sensor.yr_symbol:
+  friendly_name: Vejr
+sun.sun:
+  friendly_name: Sol
+zwave.stue_wallplug:
+  friendly_name: Stue Wallplug
+sensor.stue_multi_statistics_humidity_mean:
+  friendly_name: Stue Luftfugtighed Gennemsnit
+sensor.nextsunrise:
+  icon: mdi:weather-sunset-up
+sensor.nextsunset:
+  icon: mdi:weather-sunset-down
+sensor.weekofyear:
+  icon: mdi:calendar-today
+sensor.date_long:
+  icon: mdi:calendar-blank
+group.group_favorites:
+  order: 1
+group.group_datetimeweather:
+  order: 2
+group.tab_stue:
+  order: 1
+group.tab_system:
+  order: 2
+group.tab_power:
+  order: 3
+group.tab_test:
+  order: 4
+zwave.stue_akvarie:
+  friendly_name: Stue Lys Akvarie
+zwave.stue_light_loft:
+  friendly_name: Stue Lys Loft
+switch.stue_lys_lyskaede:
+  icon: mdi:lightbulb
+switch.have_lys:
+  icon: mdi:lightbulb
+zwave.stue_lys_loft:
+  friendly_name: Stue Lys Loft
+zwave.stue_lys_lyskaede:
+  friendly_name: Stue Lyskæde
+zwave.gang_multi:
+  friendly_name: Gang Sensor Loft
+zwave.have_lys:
+  friendly_name: Have Lys
+zwave.gang_lys:
+  friendly_name: Gang Lys Loft
+zone.home:
+  beacon:
+    uuid: !secret ibeacon_home_uuid
+    major: !secret ibeacon_home_major
+    minor: !secret ibeacon_home_minor
+zwave.gang_sensor_door:
+  friendly_name: Gang Sensor Dør
+zwave.sovevaerlse_lys_loft:
+  friendly_name: Soveværelse Lys Loft
