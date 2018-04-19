@@ -18,7 +18,7 @@
     lights:
       akvarie_lys:
         friendly_name: Akvarie Lys
-        level_template: '{{ states("input_number.akvarie_sunset_level") | int }}'
+        level_template: '{{ ( 2.55 * states("input_number.akvarie_sunset_level") | int ) | round }}'
         value_template: '{{ states("input_number.akvarie_sunset_level") | int > 0 }}'
         turn_on:
           - service: input_number.set_value
@@ -42,7 +42,7 @@
           - service: input_number.set_value
             data_template:
               entity_id: input_number.akvarie_sunset_level
-              value: "{{ brightness | int }}"
+              value: '{{ ( brightness / 2.55 ) | round() }}'
           - service: input_select.select_option
             data:
               entity_id: input_select.akvarie_sunset_automation

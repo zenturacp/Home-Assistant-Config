@@ -3,7 +3,6 @@ tab_stue:
   view: yes
   icon: mdi:sofa
   entities:
-    - group.group_stue_sensor
     - group.group_stue_lys_loft
     - group.group_stue_lys_lyskaede
     - group.group_stue_lys_akvarie

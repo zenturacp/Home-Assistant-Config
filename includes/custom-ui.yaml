@@ -32,7 +32,3 @@ group.test_gang_sensor_badges:
 
 light.akvarie_lys:
   state_card_mode: single-line
-  slider_theme:
-    min: 0
-    max: 100
-    pin: true
